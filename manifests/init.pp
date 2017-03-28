@@ -84,15 +84,6 @@ class confluence (
 
   $webappdir    = "${installdir}/atlassian-${product}-${version}"
 
-  if $::confluence_version and $::confluence_version != 'unknown' {
-    # If the running version of CONFLUENCE is less than the expected version of CONFLUENCE
-    # Shut it down in preparation for upgrade.
-    if versioncmp($version, $::confluence_version) > 0 {
-      notify { 'Attempting to upgrade CONFLUENCE': }
-      exec { $stop_confluence: before => Anchor['confluence::start'] }
-    }
-  }
-
   if $javahome == undef {
     fail('You need to specify a value for javahome')
   }
